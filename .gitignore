@@ -47,3 +47,7 @@ __pycache__
 *.log
 *.out
 .vscode
+
+#Remove all images from the commits
+**/images
+NIH/images/
