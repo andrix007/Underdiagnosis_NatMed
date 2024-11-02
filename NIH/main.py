@@ -4,7 +4,8 @@ from classification.prediction import make_pred_multilabel
 import pandas as pd
 
 #---------------------- on q
-PATH_TO_IMAGES = "/PATH TO DATASET IMAGES IN YOUR SERVER/NIH/images/"
+#PATH_TO_IMAGES = "/PATH TO DATASET IMAGES IN YOUR SERVER/NIH/images/"
+PATH_TO_IMAGES = "C:\\Users\\Andrei\\PycharmProjects\\Underdiagnosis_NatMed\\NIH\\images\\images"
 
 TRAIN_DF_PATH ="/PATH TO DATASET CSV FILES IN YOUR SERVER/split/train.csv"
 TEST_DF_PATH = "/PATH TO DATASET CSV FILES IN YOUR SERVER/split/test.csv"
