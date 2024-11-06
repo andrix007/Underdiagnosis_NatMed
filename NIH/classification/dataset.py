@@ -2,7 +2,7 @@ import torch
 from torch.utils.data import Dataset
 import os
 import numpy as np
-from scipy.misc import imread
+#from scipy.misc import imread
 from PIL import Image
 
 
@@ -25,7 +25,7 @@ class NIH(Dataset):
         self.dataframe = dataframe
         self.dataset_size = self.dataframe.shape[0]
         self.transform = transform
-        self.PATH_TO_IMAGES = PATH_TO_IMAGES
+        self.PATH_TO_IMAGES = "../images/images"
 
         self.PRED_LABEL = [
             'Atelectasis',
@@ -47,9 +47,8 @@ class NIH(Dataset):
     def __getitem__(self, idx):
         item = self.dataframe.iloc[idx]
 
-        img = imread(os.path.join(self.PATH_TO_IMAGES, item["Image Index"]))
-        
-        
+        img = Image.open(os.path.join(self.PATH_TO_IMAGES, item["Image Index"]))
+
         if len(img.shape) == 2:
             img = img[:, :, np.newaxis]
             img = np.concatenate([img, img, img], axis=2)
@@ -63,11 +62,11 @@ class NIH(Dataset):
         if self.transform is not None:
             img = self.transform(img)
         label = torch.FloatTensor(np.zeros(len(self.PRED_LABEL), dtype=float))
-        
+
         for i in range(0, len(self.PRED_LABEL)):
             if (self.dataframe[self.PRED_LABEL[i].strip()].iloc[idx].astype('float') > 0):
                 label[i] = self.dataframe[self.PRED_LABEL[i].strip()].iloc[idx].astype('float')
-            
+
         return img, label, item["Image Index"]
 
     def __len__(self):

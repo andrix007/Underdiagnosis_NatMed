@@ -61,10 +61,10 @@ def train(train_df, val_df, PATH_TO_IMAGES, modeltype, CRITERION, device,lr):
                                      std=[0.229, 0.224, 0.225])
 
     train_loader = torch.utils.data.DataLoader(
-        NIH(train_df, path_image=PATH_TO_IMAGES, transform=transforms.Compose([
+        NIH(train_df, "../images/images", transform=transforms.Compose([
                                                                     transforms.RandomHorizontalFlip(),
                                                                     transforms.RandomRotation(10),
-                                                                    transforms.Scale(256),
+                                                                    transforms.Resize(256),
                                                                     transforms.CenterCrop(256),
                                                                     transforms.ToTensor(),
                                                                     normalize
@@ -72,8 +72,8 @@ def train(train_df, val_df, PATH_TO_IMAGES, modeltype, CRITERION, device,lr):
         batch_size=BATCH_SIZE, shuffle=True, num_workers=WORKERS, pin_memory=True)
 
     val_loader = torch.utils.data.DataLoader(
-        NIH(val_df,path_image=PATH_TO_IMAGES, transform=transforms.Compose([
-                                                                transforms.Scale(256),
+        NIH(val_df,"../images/images", transform=transforms.Compose([
+                                                                transforms.Resize(256),
                                                                 transforms.CenterCrop(256),
                                                                 transforms.ToTensor(),
                                                                 normalize
@@ -115,14 +115,14 @@ def train(train_df, val_df, PATH_TO_IMAGES, modeltype, CRITERION, device,lr):
 
         phase = 'train'
         optimizer = torch.optim.Adam(params=filter(lambda p: p.requires_grad, model.parameters()), lr=lr)
-        running_loss = batch_iterator(model=model, phase=phase, Data_loader=train_loader, criterion=criterion, optimizer=optimizer, device=device)
+        running_loss = batch_iterator(model=model, phase=phase, dataloader=train_loader, criterion=criterion, optimizer=optimizer, device=device)
         epoch_loss_train = running_loss / train_df_size
         epoch_losses_train.append(epoch_loss_train.item())
         print("Train_losses:", epoch_losses_train)
 
         phase = 'val'
         optimizer = torch.optim.Adam(params=filter(lambda p: p.requires_grad, model.parameters()), lr=lr)
-        running_loss = batch_iterator(model=model, phase=phase, Data_loader=val_loader, criterion=criterion, optimizer=optimizer, device=device)
+        running_loss = batch_iterator(model=model, phase=phase, dataloader=val_loader, criterion=criterion, optimizer=optimizer, device=device)
         epoch_loss_val = running_loss / val_df_size
         epoch_losses_val.append(epoch_loss_val.item())
         print("Validation_losses:", epoch_losses_val)

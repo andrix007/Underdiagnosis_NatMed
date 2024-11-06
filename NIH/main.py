@@ -1,15 +1,15 @@
 import torch
 from classification.train import train
-from classification.prediction import make_pred_multilabel
+from classification.predictions import make_pred_multilabel
 import pandas as pd
 
 #---------------------- on q
 #PATH_TO_IMAGES = "/PATH TO DATASET IMAGES IN YOUR SERVER/NIH/images/"
 PATH_TO_IMAGES = "C:\\Users\\Andrei\\PycharmProjects\\Underdiagnosis_NatMed\\NIH\\images\\images"
 
-TRAIN_DF_PATH ="/PATH TO DATASET CSV FILES IN YOUR SERVER/split/train.csv"
-TEST_DF_PATH = "/PATH TO DATASET CSV FILES IN YOUR SERVER/split/test.csv"
-VAL_DF_PATH = "/PATH TO DATASET CSV FILES IN YOUR SERVER/split/valid.csv"
+TRAIN_DF_PATH ="./Dataframes/train_df.csv"
+TEST_DF_PATH = "./Dataframes/test_df.csv"
+VAL_DF_PATH = "./Dataframes/val_df.csv"
 
 # We mix all existing data of the provoder regardless of their original validation/train label in the original dataset and split them into 80-10-10 train test and validation sets based on Patient-ID such that no patient images appears in more than one split. 
 
