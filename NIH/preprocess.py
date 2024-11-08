@@ -26,7 +26,7 @@ def preprocess_NIH(df):
 
     # Step 4: Replace specific values in relevant columns
     replacements = {
-        'Pleural Effusion': {"[False]": 0, "[True]": 1, "[ True]": 1},
+        'Effusion': {"[False]": 0, "[True]": 1, "[ True]": 1},
         'Gender': {None: 0, -1: 0},
         'Age': {19: "0-20", 39: "20-40", 59: "40-60", 79: "60-80", 81: "80+"}
     }

@@ -51,3 +51,6 @@ __pycache__
 #Remove all images from the commits
 **/images
 NIH/images/
+MIMIC/data/mimic-cxr
+MIMIC/data/mimic-cxr-jpg
+MIMIC/data/mimiciv
