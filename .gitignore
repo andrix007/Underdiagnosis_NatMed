@@ -48,6 +48,8 @@ __pycache__
 *.out
 .vscode
 
+*.csv
+
 #Remove all images from the commits
 **/images
 NIH/images/
