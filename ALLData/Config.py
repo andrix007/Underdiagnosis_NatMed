@@ -3,21 +3,22 @@ import os
 import numpy as np
 
 
+"""
 #----------------------------- q
-path_image_MIMIC = "/PATH TO MIMIC DATASET IMAGES IN YOUR SERVER/split/MIMIC-CXR/"
+path_image_MIMIC = "/bigdata/andrei_thesis/MIMIC/mimic-cxr-2.0.0.physionet.org/"
 
 
 train_df_path_MIMIC ="/PATH TO DATASET CSV FILES IN YOUR SERVER/split/new_train.csv"
 test_df_path_MIMIC ="/PATH TO DATASET CSV FILES IN YOUR SERVER/split/new_test.csv"
 val_df_path_MIMIC = "/PATH TO DATASET CSV FILES IN YOUR SERVER/split/new_valid.csv"
 
-path_image_NIH = "/PATH TO NIH DATASET IMAGES IN YOUR SERVER/images/"
+path_image_NIH = "/bigdata/andrei_thesis/NIH_data/images/images/"
 
 train_df_path_NIH ="/PATH TO DATASET CSV FILES IN YOUR SERVER/split/train.csv"
 test_df_path_NIH = "/PATH TO DATASET CSV FILES IN YOUR SERVER/split/test.csv"
 val_df_path_NIH = "/PATH TO DATASET CSV FILES IN YOUR SERVER/split/valid.csv"
 
-path_image_CXP = "/PATH TO CXP DATASET IMAGES IN YOUR SERVER/CheXpert/"
+path_image_CXP = "/bigdata/andrei_thesis/CXP_data/images/"
 
 
 train_df_path_CXP ="/PATH TO CXP DATASET CSV FILES IN YOUR SERVER/split/new_train.csv"
@@ -163,11 +164,11 @@ train_df_MIMIC_new = train_df_MIMIC[['subject_id','Jointpath','Sex',"Age",'No Fi
 test_df_CXP_new = test_df_CXP[['subject_id','Jointpath','Sex','Age','No Finding', 'Atelectasis', 'Cardiomegaly',  'Effusion',  'Pneumonia', 'Pneumothorax', 'Consolidation','Edema' ]]
 test_df_NIH_new = test_df_NIH[['subject_id','Jointpath','Sex','Age','No Finding', 'Atelectasis', 'Cardiomegaly',  'Effusion',  'Pneumonia', 'Pneumothorax', 'Consolidation','Edema' ]]
 test_df_MIMIC_new = test_df_MIMIC[['subject_id','Jointpath','Sex','Age','No Finding', 'Atelectasis', 'Cardiomegaly',  'Effusion',  'Pneumonia', 'Pneumothorax', 'Consolidation','Edema' ]]
+"""
 
-
-test_df = test_df_CXP_new.append([test_df_NIH_new, test_df_MIMIC_new])
-train_df = train_df_CXP_new.append([train_df_NIH_new, train_df_MIMIC_new])
-val_df = val_df_CXP_new.append([val_df_NIH_new, val_df_MIMIC_new])
+test_df = pd.read_csv("./data_mevis/ALLData/preprocessed_test_df_1.csv")
+train_df = pd.read_csv("./data_mevis/ALLData/preprocessed_train_df_1.csv")
+val_df = pd.read_csv("./data_mevis/ALLData/preprocessed_val_df_1.csv")
 
 
 

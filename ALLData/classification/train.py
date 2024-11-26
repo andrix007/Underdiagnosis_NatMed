@@ -12,7 +12,7 @@ import torchvision.transforms as transforms
 import warnings
 warnings.filterwarnings("ignore")
 import pandas as pd
-from dataset import AllDatasetsShared
+from .dataset import AllDatasetsShared
 from classification.utils import  checkpoint, save_checkpoint, saved_items
 from classification.batchiterator import batch_iterator
 from tqdm import tqdm
@@ -55,7 +55,7 @@ def train(modeltype, CRITERION, device,lr):
         AllDatasetsShared(train_df, transform=transforms.Compose([
                                                                     transforms.RandomHorizontalFlip(),
                                                                     transforms.RandomRotation(15),
-                                                                    transforms.Scale(256),
+                                                                    transforms.Resize(256),
                                                                     transforms.CenterCrop(256),
                                                                     transforms.ToTensor(),
                                                                     normalize
@@ -64,7 +64,7 @@ def train(modeltype, CRITERION, device,lr):
 
     val_loader = torch.utils.data.DataLoader(
         AllDatasetsShared(val_df, transform=transforms.Compose([
-                                                                transforms.Scale(256),
+                                                                transforms.Resize(256),
                                                                 transforms.CenterCrop(256),
                                                                 transforms.ToTensor(),
                                                                 normalize
@@ -109,14 +109,14 @@ def train(modeltype, CRITERION, device,lr):
 
         phase = 'train'
         optimizer = torch.optim.Adam(params=filter(lambda p: p.requires_grad, model.parameters()), lr=lr)
-        running_loss = batch_iterator(model=model, phase=phase, Data_loader=train_loader, criterion=criterion, optimizer=optimizer, device=device)
+        running_loss = batch_iterator(model=model, phase=phase, dataloader=train_loader, criterion=criterion, optimizer=optimizer, device=device)
         epoch_loss_train = running_loss / train_df_size
         epoch_losses_train.append(epoch_loss_train.item())
         print("Train_losses:", epoch_losses_train)
 
         phase = 'val'
         optimizer = torch.optim.Adam(params=filter(lambda p: p.requires_grad, model.parameters()), lr=lr)
-        running_loss = batch_iterator(model=model, phase=phase, Data_loader=val_loader, criterion=criterion, optimizer=optimizer, device=device)
+        running_loss = batch_iterator(model=model, phase=phase, dataloader=val_loader, criterion=criterion, optimizer=optimizer, device=device)
         epoch_loss_val = running_loss / val_df_size
         epoch_losses_val.append(epoch_loss_val.item())
         print("Validation_losses:", epoch_losses_val)

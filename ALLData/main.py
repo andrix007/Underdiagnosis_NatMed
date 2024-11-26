@@ -1,6 +1,11 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"  # Use GPUs 0 and 1
+
 import torch
 from classification.train import train
-from classification.prediction import make_pred_multilabel
+from predictions import make_pred_multilabel
 import pandas as pd
 from Config import train_df, test_df, val_df
 
@@ -9,6 +14,12 @@ def main():
 
     MODE = "train"  # Select "train" or "test", "resume"
 
+    if torch.cuda.is_available():
+        print("Using GPUs:", torch.cuda.device_count())
+        for i in range(torch.cuda.device_count()):
+            print(f"GPU {i}: {torch.cuda.get_device_name(i)}")
+    else:
+        print("No GPUs available. Running on CPU.")
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 

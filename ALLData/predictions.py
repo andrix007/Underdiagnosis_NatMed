@@ -1,4 +1,4 @@
-from classification.datase import AllDatasetsShared
+from classification.dataset import AllDatasetsShared
 import pandas as pd
 import torch
 import torchvision.transforms as transforms
