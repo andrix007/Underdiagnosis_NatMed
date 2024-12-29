@@ -1,8 +1,8 @@
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"  # Use GPUs 0 and 1
-
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"  # Use GPUs 0 and 1
+import argparse
 import torch
 from classification.train import train
 from predictions import make_pred_multilabel
@@ -12,7 +12,11 @@ from Config import train_df, test_df, val_df
 
 def main():
 
-    MODE = "train"  # Select "train" or "test", "resume"
+    parser = argparse.ArgumentParser(description="Run the training or testing process.")
+    parser.add_argument("--MODE", type=str, required=True, choices=["train", "test", "resume"], 
+                        help="Select the mode: 'train', 'test', or 'resume'")
+    args = parser.parse_args()
+    MODE = args.MODE  # Extract MODE from command-line arguments
 
     if torch.cuda.is_available():
         print("Using GPUs:", torch.cuda.device_count())
@@ -35,7 +39,6 @@ def main():
        
         CheckPointData = torch.load('results/checkpoint')
         model = CheckPointData['model']
-
         make_pred_multilabel(model, device)
 
 

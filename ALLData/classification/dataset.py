@@ -27,7 +27,8 @@ class AllDatasetsShared(Dataset):
             'No Finding', 'Atelectasis', 'Cardiomegaly', 'Effusion',
             'Pneumonia', 'Pneumothorax', 'Consolidation', 'Edema'
         ]
-        self.missing_files = 0  # Counter for missing files
+        AllDatasetsShared.missing_files = []
+        
 
     def __getitem__(self, idx):
         while True:  # Loop until a valid file is found
@@ -64,9 +65,10 @@ class AllDatasetsShared(Dataset):
                 return img, label, item["Jointpath"]
 
             except FileNotFoundError:
-                # Log missing file and increment counter
-                self.missing_files += 1
-                print(f"File not found (so far {self.missing_files}): {item['Jointpath']}")
+                #AllDatasetsShared.missing_files.append(item["Jointpath"])
+                #print(f"File not found: {item['Jointpath']}")
+                with open('missing_files.txt', 'a') as mf:
+                    mf.write(item['Jointpath']+'\n')
                 idx = (idx + 1) % self.dataset_size  # Move to the next index
 
     def __len__(self):

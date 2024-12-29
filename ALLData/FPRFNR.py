@@ -154,16 +154,16 @@ def FPFN_NF_CXP(TrueWithMeta_df, df, diseases, category, category_name):
                 FPR_age = pd.concat([FPR_age, FNR_A.reindex(FPR_age.index)], axis=1) 
 
             if i == 3:
-                Perc_A = pd.DataFrame(NNF_total[i], columns=["#NNF_80-"])
+                Perc_A = pd.DataFrame(NNF_total[i], columns=["#NNF_80+"])
                 FPR_age = pd.concat([FPR_age, Perc_A.reindex(FPR_age.index)], axis=1)
                 
-                Perc_A = pd.DataFrame(PNF_total[i], columns=["#PNF_80-"])
+                Perc_A = pd.DataFrame(PNF_total[i], columns=["#PNF_80+"])
                 FPR_age = pd.concat([FPR_age, Perc_A.reindex(FPR_age.index)], axis=1)                
                                 
-                FPR_A = pd.DataFrame(FP_total[i], columns=["FPR_80-"])
+                FPR_A = pd.DataFrame(FP_total[i], columns=["FPR_80+"])
                 FPR_age = pd.concat([FPR_age, FPR_A.reindex(FPR_age.index)], axis=1)
                 
-                FNR_A = pd.DataFrame(FN_total[i], columns=["FNR_80-"])
+                FNR_A = pd.DataFrame(FN_total[i], columns=["FNR_80+"])
                 FPR_age = pd.concat([FPR_age, FNR_A.reindex(FPR_age.index)], axis=1) 
 
             if i == 4:
@@ -336,7 +336,7 @@ def FN_NF_CXP_MEMBERSHIP_Num_Inter(TrueWithMeta_df, df, diseases, category1, cat
 def FPR_Underdiagnosis():
     
     diseases = ['No Finding']
-    Age = ['40-60', '60-80', '20-40', '80-', '0-20']
+    Age = ['40-60', '60-80', '20-40', '80+', '0-20']
     Sex = ['M', 'F']
     
     pred= pd.read_csv("./results/bipred.csv")

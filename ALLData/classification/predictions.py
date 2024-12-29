@@ -32,14 +32,14 @@ def make_pred_multilabel(model, device):
     normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 
     dataset_test = AllDatasetsShared(test_df, transform=transforms.Compose([
-        transforms.Scale(256),
+        transforms.Resize(256),
         transforms.CenterCrop(256),
         transforms.ToTensor(),
         normalize]))
     test_loader = torch.utils.data.DataLoader(dataset_test, BATCH_SIZE, shuffle=True, num_workers=WORKERS, pin_memory=True)
 
     dataset_val = AllDatasetsShared(val_df, transform=transforms.Compose([
-        transforms.Scale(256),
+        transforms.Resize(256),
         transforms.CenterCrop(256),
         transforms.ToTensor(),
         normalize]))
