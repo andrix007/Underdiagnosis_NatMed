@@ -10,6 +10,8 @@ from torch import nn
 import torch
 import torchvision.transforms as transforms
 import warnings
+
+from Underdiagnosis_NatMed.ALLData.Config import datasets
 warnings.filterwarnings("ignore")
 import pandas as pd
 from .dataset import AllDatasetsShared
@@ -18,7 +20,7 @@ from classification.batchiterator import batch_iterator
 from tqdm import tqdm
 import random
 import numpy as np
-from Config import train_df, val_df
+from Config import val_df
 
 
 def train(modeltype, CRITERION, device, lr):
@@ -33,7 +35,7 @@ def train(modeltype, CRITERION, device, lr):
     val_df_size = len(val_df)
     print(f"Validation dataset size: {val_df_size}")
    
-    train_df_size = len(train_df)
+    train_df_size = len(datasets)
     print(f"Training dataset size: {train_df_size}")
 
     random_seed = 6  # Set random seed
@@ -46,7 +48,7 @@ def train(modeltype, CRITERION, device, lr):
 
     # Data loaders
     train_loader = torch.utils.data.DataLoader(
-        AllDatasetsShared(train_df, transform=transforms.Compose([
+        AllDatasetsShared(datasets, transform=transforms.Compose([
             transforms.RandomHorizontalFlip(),
             transforms.RandomRotation(15),
             transforms.Resize(256),

@@ -1,6 +1,8 @@
 import time
 import csv
 import os
+
+from Underdiagnosis_NatMed.ALLData.Config import datasets
 os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
 import datetime
 import torch.optim
@@ -18,7 +20,7 @@ from classification.batchiterator import batch_iterator
 from tqdm import tqdm
 import random
 import numpy as np
-from Config import train_df, val_df
+from Config import val_df
 
 
 def train(modeltype, CRITERION, device,lr):
@@ -38,7 +40,7 @@ def train(modeltype, CRITERION, device,lr):
     print("Validation_df path",val_df_size)
 
    
-    train_df_size = len(train_df)
+    train_df_size = len(datasets)
     print("Train_df path", train_df_size)
 
     random_seed = 3 #random.randint(0,100)
@@ -52,7 +54,7 @@ def train(modeltype, CRITERION, device,lr):
                                      std=[0.229, 0.224, 0.225])
 
     train_loader = torch.utils.data.DataLoader(
-        AllDatasetsShared(train_df, transform=transforms.Compose([
+        AllDatasetsShared(datasets, transform=transforms.Compose([
                                                                     transforms.RandomHorizontalFlip(),
                                                                     transforms.RandomRotation(15),
                                                                     transforms.Scale(256),

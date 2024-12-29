@@ -1,5 +1,7 @@
 import sys
 import os
+
+from Underdiagnosis_NatMed.ALLData.Config import datasets
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.environ["CUDA_VISIBLE_DEVICES"] = "1"  # Use GPUs 0 and 1
 import argparse
@@ -7,7 +9,7 @@ import torch
 from classification.train import train
 from predictions import make_pred_multilabel
 import pandas as pd
-from Config import train_df, test_df, val_df
+from Config import test_df, val_df
 
 
 def main():
